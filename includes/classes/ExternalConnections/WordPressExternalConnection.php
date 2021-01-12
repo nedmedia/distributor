@@ -533,6 +533,12 @@ class WordPressExternalConnection extends ExternalConnection {
 
 		$type_url = $this->parse_type_items_link( $body_array[ $post_type ] );
 
+		// If the custom post type "noticia" exists on the remote side, we force push there
+		// TODO: implement this as a filter
+		if( isset($body_array['noticia']) ){
+			$type_url = $this->parse_type_items_link( $body_array[ 'noticia' ] );
+		}
+
 		if ( empty( $type_url ) ) {
 			return new \WP_Error( 'no-push-post-type', esc_html__( 'Could not determine remote post type endpoint', 'distributor' ) );
 		}
